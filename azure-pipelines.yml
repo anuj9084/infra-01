@@ -5,16 +5,16 @@ pool:
   name: 'AgentUserDefinedPool'
 
 steps:
-- task: TerraformInstaller@1
-  inputs:
-    terraformVersion: 'latest'
+  - task: TerraformInstaller@1
+    inputs:
+      terraformVersion: 'latest'
 
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)\infra-01'
-    backendServiceArm: 'anuj-pipeline-sc'
-    backendAzureRmStorageAccountName: 'anujsrr121'
-    backendAzureRmContainerName: 'meracontainer'
-    backendAzureRmKey: 'terraform.tfstate'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'init'
+      workingDirectory: '$(System.DefaultWorkingDirectory)\infra-01'
+      backendServiceArm: 'anuj-pipeline-sc'
+      backendAzureRmStorageAccountName: 'anujsrr121'
+      backendAzureRmContainerName: 'meracontainer'
+      backendAzureRmKey: 'terraform.tfstate'
