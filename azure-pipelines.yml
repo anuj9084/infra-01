@@ -12,17 +12,14 @@ steps:
       terraformVersion: 'latest'
 
   - powershell: |
-      where.exe terraform
       terraform version
     displayName: 'Check Terraform'
 
-  - task: TerraformTask@5
+  - powershell: |
+      terraform init `
+        -backend-config="storage_account_name=anujsrr121" `
+        -backend-config="container_name=meracontainer" `
+        -backend-config="key=terraform.tfstate" `
+        -backend-config="use_azuread_auth=true"
+    workingDirectory: '$(System.DefaultWorkingDirectory)\infra-01'
     displayName: 'Terraform Init'
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      workingDirectory: '$(System.DefaultWorkingDirectory)\infra-01'
-      backendServiceArm: 'anuj-pipeline-sc'
-      backendAzureRmStorageAccountName: 'anujsrr121'
-      backendAzureRmContainerName: 'meracontainer'
-      backendAzureRmKey: 'terraform.tfstate'
