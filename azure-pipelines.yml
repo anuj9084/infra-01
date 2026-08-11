@@ -1,25 +1,19 @@
 trigger:
-  - feature
+  - feature/101
 
 pool:
   name: 'AgentUserDefinedPool'
 
 steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
 
-  - task: TerraformInstaller@1
-    displayName: 'Install Terraform'
-    inputs:
-      terraformVersion: 'latest'
-
-  - powershell: |
-      terraform version
-    displayName: 'Check Terraform'
-
-  - powershell: |
-      terraform init `
-        -backend-config="storage_account_name=anujsrr121" `
-        -backend-config="container_name=meracontainer" `
-        -backend-config="key=terraform.tfstate" `
-        -backend-config="use_azuread_auth=true"
-    workingDirectory: '$(System.DefaultWorkingDirectory)\infra-01'
-    displayName: 'Terraform Init'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'anuj-pipeline-sc'
+    backendAzureRmStorageAccountName: 'anujsrr121'
+    backendAzureRmContainerName: 'meracontainer'
+    backendAzureRmKey: 'terraform.tfstate'
