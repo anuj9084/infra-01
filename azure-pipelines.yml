@@ -5,11 +5,19 @@ pool:
   name: 'AgentUserDefinedPool'
 
 steps:
+
   - task: TerraformInstaller@1
+    displayName: 'Install Terraform'
     inputs:
       terraformVersion: 'latest'
 
+  - powershell: |
+      where.exe terraform
+      terraform version
+    displayName: 'Check Terraform'
+
   - task: TerraformTask@5
+    displayName: 'Terraform Init'
     inputs:
       provider: 'azurerm'
       command: 'init'
