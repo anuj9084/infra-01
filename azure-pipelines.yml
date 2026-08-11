@@ -1,0 +1,18 @@
+trigger:
+  - feature
+
+pool:
+  name: 'AgentsPool'
+
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'anuj-ka-sc'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        cd INFRA-01
+        terraform init
+        terraform fmt
+        terraform validate
+        terraform plan
