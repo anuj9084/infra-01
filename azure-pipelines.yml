@@ -2,12 +2,12 @@ trigger:
   - feature
 
 pool:
-  name: 'AgentsPool'
+  name: 'AgentUserDefinedPool'
 
 steps:
   - task: AzureCLI@2
     inputs:
-      azureSubscription: 'anuj-ka-sc'
+      azureSubscription: 'anuj-pipeline-sc'
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
