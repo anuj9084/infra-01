@@ -1,0 +1,20 @@
+
+trigger: none
+
+pool: 'AgentUserDefinedPool'
+
+steps:
+
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendServiceArm: 'anuj-pipeline-sc'
+    backendAzureRmStorageAccountName: 'amzamsa'
+    backendAzureRmContainerName: 'blobstr'
+    backendAzureRmKey: 'terraform.tfstate'
