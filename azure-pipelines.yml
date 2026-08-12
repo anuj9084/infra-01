@@ -18,3 +18,14 @@ steps:
     backendAzureRmStorageAccountName: 'amzamsa'
     backendAzureRmContainerName: 'blobstr'
     backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'anuj-pipeline-sc'
