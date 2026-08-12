@@ -1,4 +1,3 @@
-
 trigger: none
 
 pool: 'AgentUserDefinedPool'
@@ -10,22 +9,27 @@ steps:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(Build.SourcesDirectory)'
     backendServiceArm: 'anuj-pipeline-sc'
     backendAzureRmStorageAccountName: 'amzamsa'
     backendAzureRmContainerName: 'blobstr'
     backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Validate'
   inputs:
     provider: 'azurerm'
     command: 'validate'
+    workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    workingDirectory: '$(Build.SourcesDirectory)'
     environmentServiceNameAzureRM: 'anuj-pipeline-sc'
